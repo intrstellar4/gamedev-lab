@@ -16,18 +16,19 @@ public class player : MonoBehaviour
     public LayerMask whatIsGround;
     private bool grounded;
     private bool gr;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyDown(Spacebar)&& grounded)
+        if (Input.GetKeyDown(Spacebar) && grounded)
         {
             Jump();
         }
@@ -52,6 +53,10 @@ public class player : MonoBehaviour
             }
         }
 
+        anim.SetFloat("Speed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+        anim.SetFloat("Height", GetComponent<Rigidbody2D>().velocity.y);
+        anim.SetBool("Grounded", grounded);
+
     }
 
     void Jump()
@@ -63,4 +68,5 @@ public class player : MonoBehaviour
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
     }
+
 }
